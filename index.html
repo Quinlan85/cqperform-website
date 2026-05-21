@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CQ Perform — Conor Quinlan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #111111;
+    --surface: #1A1A1A;
+    --surface2: #222222;
+    --amber: #F0A500;
+    --amber-dim: rgba(240,165,0,0.12);
+    --amber-glow: rgba(240,165,0,0.25);
+    --text: #F0EDE8;
+    --muted: #888880;
+    --dim: #444440;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(17,17,17,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    background: url('conor-speaking.jpg') center 30% / cover no-repeat;
+    filter: brightness(0.45) saturate(0.7);
+    transform: scale(1.02);
+    transition: transform 8s ease;
+  }
+
+  .hero-img.loaded { transform: scale(1); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(17,17,17,0.2) 0%,
+      rgba(17,17,17,0.1) 30%,
+      rgba(17,17,17,0.7) 70%,
+      rgba(17,17,17,1) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 40px 80px;
+    max-width: 800px;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--amber);
+    color: #111;
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .hero-cta:hover {
+    background: #FFB820;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(240,165,0,0.3);
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section-body {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--amber);
+    margin: 32px 0;
+  }
+
+  /* ABOUT */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-image {
+    position: relative;
+  }
+
+  .about-image img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(20%) brightness(0.85);
+  }
+
+  .about-image::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    width: 60%;
+    height: 60%;
+    border: 1.5px solid var(--amber);
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  .credential-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .credential {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .credential-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* APPS */
+  .apps-section { background: var(--surface); }
+
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 60px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .app-card {
+    background: var(--bg);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+  }
+
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--amber);
+    transition: height 0.3s;
+  }
+
+  .app-card:hover { background: var(--surface2); }
+  .app-card:hover::before { height: 100%; }
+
+  .app-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--dim);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+
+  .app-card:hover .app-number { color: var(--amber-glow); }
+
+  .app-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .app-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .app-link {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .app-link::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .app-card:hover .app-link::after { transform: translateX(4px); }
+
+  /* FOR WHO */
+  .for-who {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .who-card {
+    background: var(--surface);
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .who-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--amber);
+    opacity: 0.4;
+  }
+
+  .who-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .who-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .who-list li {
+    font-size: 15px;
+    color: var(--muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .who-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-options {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .contact-btn.primary {
+    background: var(--amber);
+    color: #111;
+  }
+
+  .contact-btn.primary:hover {
+    background: #FFB820;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(240,165,0,0.3);
+  }
+
+  .contact-btn.secondary {
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .contact-btn.secondary:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .contact-form {
+    margin-top: 48px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 16px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: rgba(240,165,0,0.4);
+  }
+
+  .contact-form textarea { height: 140px; resize: none; }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: var(--dim); }
+
+  .contact-form button {
+    background: var(--amber);
+    color: #111;
+    border: none;
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    align-self: flex-start;
+    transition: all 0.2s;
+  }
+
+  .contact-form button:hover {
+    background: #FFB820;
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .hero-content { padding: 0 20px 60px; }
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .who-grid { grid-template-columns: 1fr; }
+    .contact-options { flex-direction: column; align-items: center; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">CQ<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#who">Who It's For</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img" id="heroImg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">CQ Perform — Conor Quinlan</p>
+    <h1 class="hero-title">Sport psychology<br>that works in the<br><em>real world.</em></h1>
+    <p class="hero-sub">Accredited Psychotherapist (BABCP) specialising in sport performance and mental skills development. MSc Leadership.</p>
+    <a href="#tools" class="hero-cta">Explore the tools</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-image fade-in">
+      <img src="conor-speaking.jpg" alt="Conor Quinlan speaking to athletes">
+    </div>
+    <div class="fade-in">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Built for athletes.<br>Grounded in evidence.</h2>
+      <div class="divider"></div>
+      <p class="section-body">
+        I work with athletes, coaches and clubs across Ireland — helping them develop the mental skills that determine performance. My approach is practical, evidence-based, and designed for the demands of real sport.
+      </p>
+      <p class="section-body" style="margin-top: 16px;">
+        The CQ Perform suite brings that work into a digital format — accessible tools that athletes and coaches can use independently, between sessions, or as part of a wider performance programme.
+      </p>
+      <div class="credential-row">
+        <div class="credential"><span class="credential-dot"></span>BABCP Accredited Psychotherapist</div>
+        <div class="credential"><span class="credential-dot"></span>MSc Leadership</div>
+        <div class="credential"><span class="credential-dot"></span>CBT Specialist</div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="apps-section">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <p class="section-label fade-in">The Tools</p>
+    <h2 class="section-title fade-in">A suite built for<br>every stage of performance.</h2>
+  </div>
+  <div class="apps-grid">
+    <a href="https://recover.cqperform.ie" class="app-card fade-in" target="_blank">
+      <div class="app-number">01</div>
+      <div class="app-name">CQ Recover</div>
+      <p class="app-desc">The mental side of injury recovery. Three phases from just injured to return to play — covering identity, catastrophising, fear avoidance, visualisation and more.</p>
+      <span class="app-link">recover.cqperform.ie</span>
+    </a>
+    <a href="https://ppr.cqperform.ie" class="app-card fade-in" target="_blank">
+      <div class="app-number">02</div>
+      <div class="app-name">Pre-Performance Routine</div>
+      <p class="app-desc">A structured pre-match mental routine. Checklists, cue words and visualisation — everything an athlete needs to arrive ready.</p>
+      <span class="app-link">ppr.cqperform.ie</span>
+    </a>
+    <a href="https://player.cqperform.ie" class="app-card fade-in" target="_blank">
+      <div class="app-number">03</div>
+      <div class="app-name">Player Reflection</div>
+      <p class="app-desc">Post-match reflection for individual players. Honest self-assessment of preparation, mindset and intensity — building the habit of learning from every game.</p>
+      <span class="app-link">player.cqperform.ie</span>
+    </a>
+    <a href="https://coach.cqperform.ie" class="app-card fade-in" target="_blank">
+      <div class="app-number">04</div>
+      <div class="app-name">Coach Reflection</div>
+      <p class="app-desc">Post-match reflection for coaches. A structured review of decisions, communication and leadership — because better coaches build better teams.</p>
+      <span class="app-link">coach.cqperform.ie</span>
+    </a>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who">
+  <div class="for-who">
+    <p class="section-label fade-in">Who It's For</p>
+    <h2 class="section-title fade-in">Designed for the people<br>in the arena.</h2>
+    <div class="who-grid fade-in">
+      <div class="who-card">
+        <h3 class="who-title">Athletes</h3>
+        <ul class="who-list">
+          <li>Manage the psychological impact of injury</li>
+          <li>Build a consistent pre-performance routine</li>
+          <li>Develop mental skills that transfer to performance</li>
+          <li>Reflect honestly after every game</li>
+          <li>Work independently between sessions</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <h3 class="who-title">Coaches & Physios</h3>
+        <ul class="who-list">
+          <li>Give injured athletes evidence-based mental support</li>
+          <li>Build a reflection culture across your squad</li>
+          <li>Track player mindset alongside physical progress</li>
+          <li>Access sport psychology tools without the cost of full-time support</li>
+          <li>Develop your own reflective practice as a coach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <p class="section-label fade-in">Get in Touch</p>
+    <h2 class="section-title fade-in">Let's talk about<br>what you need.</h2>
+    <div class="divider" style="margin: 24px auto;"></div>
+    <p class="section-body fade-in" style="margin: 0 auto; text-align: center;">
+      Whether you're an athlete, a coach, a physio or a club — get in touch and we can talk about how CQ Perform can work for you.
+    </p>
+    <div class="contact-options fade-in">
+      <a href="https://wa.me/353877917961" class="contact-btn primary" target="_blank">WhatsApp</a>
+      <a href="mailto:conor@cqperform.ie" class="contact-btn secondary">Email</a>
+    </div>
+    <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+      <input type="text" placeholder="Your name" required>
+      <input type="email" placeholder="Your email" required>
+      <textarea placeholder="Tell me what you're looking for..."></textarea>
+      <button type="submit">Send message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 CQ Perform — Conor Quinlan</span>
+  <span>recover.cqperform.ie · ppr.cqperform.ie · player.cqperform.ie · coach.cqperform.ie</span>
+</footer>
+
+<script>
+  // Hero image load
+  const heroImg = document.getElementById('heroImg');
+  const img = new Image();
+  img.onload = () => heroImg.classList.add('loaded');
+  img.src = 'conor-speaking.jpg';
+
+  // Scroll fade in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Sent ✓';
+    btn.style.background = '#2ECC71';
+    setTimeout(() => {
+      btn.textContent = 'Send message';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+
+</body>
+</html>
