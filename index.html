@@ -402,6 +402,89 @@
     background: var(--amber);
   }
 
+  /* TESTIMONIAL */
+  .testimonial-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .testimonial-wrap {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .testimonial-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    filter: saturate(0.9) brightness(0.9);
+  }
+
+  .testimonial { text-align: left; }
+
+  .testimonial-mark {
+    display: block;
+    height: 44px;
+    font-family: 'Playfair Display', serif;
+    font-size: 104px;
+    line-height: 1;
+    color: var(--amber);
+  }
+
+  .testimonial-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.45;
+    color: var(--text);
+    text-wrap: balance;
+  }
+
+  .testimonial .divider { margin: 36px 0 22px; }
+
+  .testimonial-attribution {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  .testimonial-name { color: var(--text); }
+
+  .testimonial-role {
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .testimonial-source { margin-top: 12px; font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .testimonial-wrap { grid-template-columns: 1fr; gap: 36px; max-width: 640px; }
+  }
+
+  .testimonial-source a {
+    display: inline-block;
+    padding: 12px 0;
+    color: var(--amber);
+    text-decoration: underline;
+    text-decoration-color: var(--amber-glow);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .testimonial-source a:hover,
+  .testimonial-source a:focus-visible { text-decoration-color: var(--amber); }
+
   /* CONTACT */
   .contact-section {
     background: var(--surface);
@@ -544,6 +627,11 @@
     .about { grid-template-columns: 1fr; gap: 40px; }
     .who-grid { grid-template-columns: 1fr; }
     .contact-options { flex-direction: column; align-items: center; }
+    .testimonial-mark { font-size: 80px; height: 34px; }
+    .testimonial .divider { margin: 28px 0 18px; }
+    .testimonial-attribution { font-size: 11px; letter-spacing: 2px; }
+    .testimonial-sep { display: none; }
+    .testimonial-club { display: block; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
   }
 </style>
@@ -576,7 +664,7 @@
 <section id="about">
   <div class="about">
     <div class="about-image fade-in">
-      <img src="conor-pairc.jpg" alt="Conor Quinlan presenting at Páirc Uí Chaoimh" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 40%;filter:grayscale(20%) brightness(0.85);">
+      <img src="conor-county-final.jpg" alt="Conor Quinlan at the 2026 county final, Páirc Uí Chaoimh." width="1020" height="765" loading="lazy" decoding="async" style="width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center;filter:grayscale(20%) brightness(0.85);">
     </div>
     <div class="fade-in">
       <p class="section-label">About</p>
@@ -660,6 +748,25 @@
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial" class="testimonial-section">
+  <div class="testimonial-wrap">
+  <img class="testimonial-photo fade-in" src="ballincollig-celebration.jpg" alt="Ballincollig hurlers celebrating the 2026 Cork Premier Intermediate county final win." width="1280" height="800" loading="lazy" decoding="async">
+  <figure class="testimonial fade-in">
+    <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+    <blockquote class="testimonial-quote" cite="https://www.echolive.ie/corksport/arid-41925626.html">
+      <p>We brought in Conor and he did a great job with us… Everyone knew what was there in terms of expectations. We addressed it, worked hard on that side of things and it helped us finish the job.</p>
+    </blockquote>
+    <div class="divider"></div>
+    <figcaption class="testimonial-attribution">
+      <span class="testimonial-name">James Dwyer</span>
+      <span class="testimonial-role">Captain, Ballincollig<span class="testimonial-sep"> — </span><span class="testimonial-club">Cork Premier Intermediate Hurling Champions 2026</span></span>
+    </figcaption>
+    <p class="testimonial-source"><a href="https://www.echolive.ie/corksport/arid-41925626.html" target="_blank" rel="noopener">Quoted in The Echo, October 2026</a></p>
+  </figure>
   </div>
 </section>
 
