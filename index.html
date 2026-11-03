@@ -57,6 +57,8 @@
   .nav-logo span { color: var(--amber); }
 
   .nav-links {
+    margin-left: auto;
+    margin-right: 36px;
     display: flex;
     gap: 36px;
     list-style: none;
@@ -602,6 +604,44 @@
     color: var(--dim);
   }
 
+
+  /* NAV CTA */
+  .nav-right { display: flex; align-items: center; gap: 36px; }
+  .nav-cta {
+    background: var(--amber); color: #111; text-decoration: none;
+    padding: 10px 18px; font-size: 12px; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible { background: #FFB820; }
+  .nav-cta-short { display: none; }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--surface); }
+  .how-inner { max-width: 1100px; margin: 0 auto; }
+  .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; list-style: none; }
+  .how-step { background: var(--surface2); border: 1px solid var(--border); padding: 36px 32px; }
+  .how-num { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 20px; }
+  .how-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  .how-body { color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+  /* FAQ */
+  .faq-inner { max-width: 760px; margin: 0 auto; }
+  .faq-list { margin-top: 40px; border-top: 1px solid var(--border); }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-item summary {
+    cursor: pointer; list-style: none; padding: 24px 40px 24px 0; position: relative;
+    font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--text);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+    color: var(--amber); font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 300;
+  }
+  .faq-item[open] summary::after { content: '\2212'; }
+  .faq-item summary:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+  .faq-item p { color: var(--muted); font-size: 16px; line-height: 1.7; padding: 0 40px 24px 0; }
+
   /* ANIMATIONS */
   @keyframes fadeUp {
     to { opacity: 1; transform: translateY(0); }
@@ -632,6 +672,12 @@
     .testimonial-attribution { font-size: 11px; letter-spacing: 2px; }
     .testimonial-sep { display: none; }
     .testimonial-club { display: block; }
+    .nav-cta { padding: 9px 14px; font-size: 11px; letter-spacing: 1px; }
+    .nav-cta-full { display: none; }
+    .nav-cta-short { display: inline; }
+    .how-steps { grid-template-columns: 1fr; margin-top: 32px; }
+    .how-step { padding: 28px 24px; }
+    .faq-item summary { font-size: 17px; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
   }
 </style>
@@ -646,6 +692,8 @@
     <li><a href="#who">Who It's For</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="https://www.instagram.com/_conorquinlan_" target="_blank">Instagram</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta"><span class="nav-cta-full">Talk to me about your team</span><span class="nav-cta-short">Talk to me</span></a>
 </nav>
 
 <!-- HERO -->
@@ -751,6 +799,61 @@
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="how-inner">
+    <p class="section-label fade-in">How It Works</p>
+    <h2 class="section-title fade-in">Three steps.<br>The first one is a conversation.</h2>
+    <ol class="how-steps fade-in">
+      <li class="how-step">
+        <div class="how-num">01</div>
+        <h3 class="how-title">A conversation</h3>
+        <p class="how-body">We talk about your team, your season and what you want from it. No cost, no commitment.</p>
+      </li>
+      <li class="how-step">
+        <div class="how-num">02</div>
+        <h3 class="how-title">A plan</h3>
+        <p class="how-body">I put together an approach that fits your squad and your management, from one workshop to a full season.</p>
+      </li>
+      <li class="how-step">
+        <div class="how-num">03</div>
+        <h3 class="how-title">The work</h3>
+        <p class="how-body">Squad sessions, one-to-ones for players who want them, and support for management through the season.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <p class="section-label fade-in">Questions</p>
+    <h2 class="section-title fade-in">Questions people ask.</h2>
+    <div class="faq-list fade-in">
+      <details class="faq-item">
+        <summary>Who do you work with?</summary>
+        <p>GAA teams and players at club and county level, hurling and football.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where are you based?</summary>
+        <p>Ballincollig, Cork. I work in person across Cork and further afield by arrangement.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does working with a team look like?</summary>
+        <p>Anything from a single squad workshop to being embedded with the panel for a full season, which is how I worked with Ballincollig on the way to the 2026 county title.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you work with individual players?</summary>
+        <p>Yes. One-to-one work is available, and players on teams I work with can access it within the season.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you have tools teams can use?</summary>
+        <p>Yes. I've built apps for player reflection, pre-game routines, injury recovery and coach reflection. They're in <a href="#tools" style="color:var(--amber);">The Tools</a> above, and we can talk about how they'd fit your team.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIAL -->
 <section id="testimonial" class="testimonial-section">
   <div class="testimonial-wrap">
@@ -784,10 +887,10 @@
       <a href="mailto:conor@cqperform.ie" class="contact-btn secondary">Email</a>
     </div>
     <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
-      <input type="text" placeholder="Your name" required>
-      <input type="email" placeholder="Your email" required>
-      <textarea placeholder="Tell me what you're looking for..."></textarea>
-      <button type="submit">Send message</button>
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="Your email" required>
+      <textarea name="message" placeholder="Tell me what you're looking for..."></textarea>
+      <button type="submit">Send by email</button>
     </form>
   </div>
 </section>
@@ -818,16 +921,18 @@
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   // Form
+  // The page has no server, so the form opens the visitor's email app with
+  // the message filled in, addressed to conor@cqperform.ie.
   function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Sent ✓';
-    btn.style.background = '#2ECC71';
-    setTimeout(() => {
-      btn.textContent = 'Send message';
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
+    const f = e.target;
+    const name = f.querySelector('[name="name"]').value.trim();
+    const email = f.querySelector('[name="email"]').value.trim();
+    const msg = f.querySelector('[name="message"]').value.trim();
+    const subject = 'CQ Perform enquiry from ' + name;
+    const body = msg + '\n\n' + name + '\n' + email;
+    window.location.href = 'mailto:conor@cqperform.ie?subject=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 </script>
 
